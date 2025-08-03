@@ -5,9 +5,10 @@ import com.railse.hiring.workforcemgmt.model.TaskManagement;
 import com.railse.hiring.workforcemgmt.model.enums.TaskStatus;
 
 
+
 import java.util.List;
 import java.util.Optional;
-
+import com.railse.hiring.workforcemgmt.model.enums.Priority;
 
 public interface TaskRepository {
     Optional<TaskManagement> findById(Long id);
@@ -15,5 +16,6 @@ public interface TaskRepository {
     List<TaskManagement> findAll();
     List<TaskManagement> findByReferenceIdAndReferenceType(Long referenceId, com.railse.hiring.workforcemgmt.common.model.enums.ReferenceType referenceType);
     List<TaskManagement> findByAssigneeIdIn(List<Long> assigneeIds);
+    List<TaskManagement> findByPriority(Priority priority);
 }
 
