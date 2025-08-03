@@ -10,6 +10,7 @@ import com.railse.hiring.workforcemgmt.model.enums.TaskStatus;
 import com.railse.hiring.workforcemgmt.repository.TaskRepository;
 import com.railse.hiring.workforcemgmt.service.TaskManagementService;
 import org.springframework.stereotype.Service;
+import com.railse.hiring.workforcemgmt.model.enums.Priority;
 
 
 import java.util.ArrayList;
@@ -148,6 +149,12 @@ public class TaskManagementServiceImpl implements TaskManagementService {
         task.setPriority(request.getPriority());
         taskRepository.save(task);
         return taskMapper.modelToDto(task);
+    }
+
+    @Override
+    public List<TaskManagementDto> getTasksByPriority(Priority priority) {
+        List<TaskManagement> tasks = taskRepository.findByPriority(priority);
+        return taskMapper.modelListToDtoList(tasks);
     }
 }
 
