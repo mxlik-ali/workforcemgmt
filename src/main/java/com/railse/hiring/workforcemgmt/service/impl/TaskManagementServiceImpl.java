@@ -171,16 +171,7 @@ public class TaskManagementServiceImpl implements TaskManagementService {
                                 )
                 )
                 .collect(Collectors.toList());
-//        List<TaskManagement> filteredTasks = tasks.stream()
-//                .filter(task -> {
-//                    // Log values for debugging
-//                    System.out.println("Task ID: " + task.getId() + ", Start Time: " + task.getTaskStartTime() +
-//                            ", StartDate: " + request.getStartDate() + ", EndDate: " + request.getEndDate());
-//                    return !TaskStatus.CANCELLED.equals(task.getStatus()) &&
-//                            !TaskStatus.COMPLETED.equals(task.getStatus()) &&
-//                            (task.getTaskStartTime() >= request.getStartDate() && task.getTaskStartTime() <= request.getEndDate());
-//                })
-//                .collect(Collectors.toList());
+
 
         return taskMapper.modelListToDtoList(filteredTasks);
     }
