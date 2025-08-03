@@ -140,6 +140,15 @@ public class TaskManagementServiceImpl implements TaskManagementService {
 
         return taskMapper.modelListToDtoList(filteredTasks);
     }
+
+    @Override
+    public TaskManagementDto updateTaskPriority(TaskPriorityUpdateRequest request) {
+        TaskManagement task = taskRepository.findById(request.getTaskId())
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + request.getTaskId()));
+        task.setPriority(request.getPriority());
+        taskRepository.save(task);
+        return taskMapper.modelToDto(task);
+    }
 }
 
 
