@@ -51,5 +51,13 @@ public class TaskManagementController {
     public Response<List<TaskManagementDto>> fetchByDate(@RequestBody TaskFetchByDateRequest request) {
         return new Response<>(taskManagementService.fetchTasksByDate(request));
     }
+
+    @PatchMapping("/{id}/priority")
+    public TaskManagementDto updateTaskPriority(
+            @PathVariable Long id,
+            @RequestBody TaskPriorityUpdateRequest request) {
+        request.setTaskId(id);
+        return taskManagementService.updateTaskPriority(request);
+    }
 }
 
