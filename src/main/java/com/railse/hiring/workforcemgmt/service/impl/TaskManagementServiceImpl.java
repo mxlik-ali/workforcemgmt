@@ -49,6 +49,7 @@ public class TaskManagementServiceImpl implements TaskManagementService {
             newTask.setTask(item.getTask());
             newTask.setAssigneeId(item.getAssigneeId());
             newTask.setPriority(item.getPriority());
+            newTask.setTaskStartTime(System.currentTimeMillis());
             newTask.setTaskDeadlineTime(item.getTaskDeadlineTime());
             newTask.setStatus(TaskStatus.ASSIGNED);
             newTask.setDescription("New task created.");
@@ -144,6 +145,7 @@ public class TaskManagementServiceImpl implements TaskManagementService {
                 newTask.setAssigneeId(request.getAssigneeId());
                 newTask.setStatus(TaskStatus.ASSIGNED);
                 newTask.setDescription("Task reassigned to new assignee.");
+                newTask.setTaskStartTime(System.currentTimeMillis());
                 if (templateTask != null) {
                     newTask.setPriority(templateTask.getPriority());
                     newTask.setTaskDeadlineTime(templateTask.getTaskDeadlineTime());
@@ -161,11 +163,24 @@ public class TaskManagementServiceImpl implements TaskManagementService {
 
         List<TaskManagement> filteredTasks = tasks.stream()
                 .filter(task ->
-                        !TaskStatus.CANCELLED.equals(task.getStatus()) && // Exclude CANCELLED
-                                task.getTaskDeadlineTime() >= request.getStartDate() &&
-                                task.getTaskDeadlineTime() <= request.getEndDate()
+                        !TaskStatus.CANCELLED.equals(task.getStatus()) &&
+                                !TaskStatus.COMPLETED.equals(task.getStatus()) &&
+                                (
+                                        (task.getTaskStartTime() >= request.getStartDate() && task.getTaskStartTime() <= request.getEndDate())||
+                                                (task.getTaskStartTime() < request.getStartDate())
+                                )
                 )
                 .collect(Collectors.toList());
+//        List<TaskManagement> filteredTasks = tasks.stream()
+//                .filter(task -> {
+//                    // Log values for debugging
+//                    System.out.println("Task ID: " + task.getId() + ", Start Time: " + task.getTaskStartTime() +
+//                            ", StartDate: " + request.getStartDate() + ", EndDate: " + request.getEndDate());
+//                    return !TaskStatus.CANCELLED.equals(task.getStatus()) &&
+//                            !TaskStatus.COMPLETED.equals(task.getStatus()) &&
+//                            (task.getTaskStartTime() >= request.getStartDate() && task.getTaskStartTime() <= request.getEndDate());
+//                })
+//                .collect(Collectors.toList());
 
         return taskMapper.modelListToDtoList(filteredTasks);
     }
