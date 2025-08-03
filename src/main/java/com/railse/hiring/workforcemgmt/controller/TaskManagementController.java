@@ -6,6 +6,7 @@ import com.railse.hiring.workforcemgmt.dto.*;
 import com.railse.hiring.workforcemgmt.service.TaskManagementService;
 import org.springframework.web.bind.annotation.*;
 import com.railse.hiring.workforcemgmt.model.enums.Priority;
+import com.railse.hiring.workforcemgmt.service.TaskHistoryService;
 
 
 import java.util.List;
@@ -15,12 +16,12 @@ import java.util.List;
 @RequestMapping("/task-mgmt")
 public class TaskManagementController {
 
-
     private final TaskManagementService taskManagementService;
+    private final TaskHistoryService taskHistoryService;
 
-
-    public TaskManagementController(TaskManagementService taskManagementService) {
+    public TaskManagementController(TaskManagementService taskManagementService, TaskHistoryService taskHistoryService) {
         this.taskManagementService = taskManagementService;
+        this.taskHistoryService = taskHistoryService;
     }
 
 
@@ -64,6 +65,20 @@ public class TaskManagementController {
     @GetMapping("/priority/{priority}")
     public List<TaskManagementDto> getTasksByPriority(@PathVariable Priority priority) {
         return taskManagementService.getTasksByPriority(priority);
+    }
+
+    @GetMapping("/{id}/details")
+    public Response<TaskDetailsDto> getTaskDetails(@PathVariable Long id) {
+        TaskManagementDto task = taskManagementService.findTaskById(id);
+        List<TaskCommentDto> comments = taskHistoryService.getCommentsForTask(id);
+        List<TaskActivityDto> activities = taskHistoryService.getActivitiesForTask(id);
+
+        TaskDetailsDto details = new TaskDetailsDto();
+        details.setTask(task);
+        details.setComments(comments);
+        details.setActivities(activities);
+
+        return new Response<>(details);
     }
 }
 

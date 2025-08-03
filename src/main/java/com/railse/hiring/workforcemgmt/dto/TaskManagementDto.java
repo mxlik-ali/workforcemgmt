@@ -9,7 +9,7 @@ import com.railse.hiring.workforcemgmt.model.enums.Task;
 import com.railse.hiring.workforcemgmt.model.enums.TaskStatus;
 import lombok.Data;
 
-
+//
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class TaskManagementDto {
@@ -22,6 +22,7 @@ public class TaskManagementDto {
     private Long assigneeId;
     private Long taskDeadlineTime;
     private Priority priority;
+    private Long taskStartTime;
 }
 
 
