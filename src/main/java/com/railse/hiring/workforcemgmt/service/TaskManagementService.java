@@ -13,6 +13,7 @@ public interface TaskManagementService {
     String assignByReference(AssignByReferenceRequest request);
     List<TaskManagementDto> fetchTasksByDate(TaskFetchByDateRequest request);
     TaskManagementDto findTaskById(Long id);
+    TaskManagementDto updateTaskPriority(TaskPriorityUpdateRequest request);
 }
 
 
