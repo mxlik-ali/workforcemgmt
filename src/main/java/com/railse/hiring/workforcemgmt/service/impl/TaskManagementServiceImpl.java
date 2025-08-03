@@ -78,39 +78,6 @@ public class TaskManagementServiceImpl implements TaskManagementService {
         return taskMapper.modelListToDtoList(updatedTasks);
     }
 
-//    @Override
-//    public String assignByReference(AssignByReferenceRequest request) {
-//        List<Task> applicableTasks = Task.getTasksByReferenceType(request.getReferenceType());
-//        List<TaskManagement> existingTasks = taskRepository.findByReferenceIdAndReferenceType(request.getReferenceId(), request.getReferenceType());
-//
-//
-//        for (Task taskType : applicableTasks) {
-//            List<TaskManagement> tasksOfType = existingTasks.stream()
-//                    .filter(t -> t.getTask() == taskType && t.getStatus() != TaskStatus.COMPLETED)
-//                    .collect(Collectors.toList());
-//
-//
-//            // BUG #1 is here. It should assign one and cancel the rest.
-//            // Instead, it reassigns ALL of them.
-//            if (!tasksOfType.isEmpty()) {
-//                for (TaskManagement taskToUpdate : tasksOfType) {
-//                    taskToUpdate.setAssigneeId(request.getAssigneeId());
-//                    taskRepository.save(taskToUpdate);
-//                }
-//            } else {
-//                // Create a new task if none exist
-//                TaskManagement newTask = new TaskManagement();
-//                newTask.setReferenceId(request.getReferenceId());
-//                newTask.setReferenceType(request.getReferenceType());
-//                newTask.setTask(taskType);
-//                newTask.setAssigneeId(request.getAssigneeId());
-//                newTask.setStatus(TaskStatus.ASSIGNED);
-//                taskRepository.save(newTask);
-//            }
-//        }
-//        return "Tasks assigned successfully for reference " + request.getReferenceId();
-//    }
-
 
     @Override
     public String assignByReference(AssignByReferenceRequest request) {
