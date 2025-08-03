@@ -2,7 +2,7 @@ package com.railse.hiring.workforcemgmt.service;
 
 
 import com.railse.hiring.workforcemgmt.dto.*;
-
+import com.railse.hiring.workforcemgmt.model.enums.Priority;
 
 import java.util.List;
 
@@ -14,6 +14,7 @@ public interface TaskManagementService {
     List<TaskManagementDto> fetchTasksByDate(TaskFetchByDateRequest request);
     TaskManagementDto findTaskById(Long id);
     TaskManagementDto updateTaskPriority(TaskPriorityUpdateRequest request);
+    List<TaskManagementDto> getTasksByPriority(Priority priority);
 }
 
 
