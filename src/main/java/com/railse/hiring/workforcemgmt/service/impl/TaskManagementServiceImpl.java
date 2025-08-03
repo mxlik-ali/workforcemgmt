@@ -58,7 +58,6 @@ public class TaskManagementServiceImpl implements TaskManagementService {
         return taskMapper.modelListToDtoList(createdTasks);
     }
 
-
     @Override
     public List<TaskManagementDto> updateTasks(UpdateTaskRequest updateRequest) {
         List<TaskManagement> updatedTasks = new ArrayList<>();
@@ -77,8 +76,7 @@ public class TaskManagementServiceImpl implements TaskManagementService {
         }
         return taskMapper.modelListToDtoList(updatedTasks);
     }
-
-
+    //changes for Bug 1
     @Override
     public String assignByReference(AssignByReferenceRequest request) {
         List<Task> applicableTasks = Task.getTasksByReferenceType(request.getReferenceType());
